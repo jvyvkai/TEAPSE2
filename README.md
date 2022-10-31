@@ -10,4 +10,4 @@ Authors:
 Submitted to SLT 2022.
 
 
-The demo page: [TEA-PSE 2.0](https://jvyvkai.github.io/TEA-PSE-2.0)
+The demo page: [TEA-PSE 2.0](https://jvyvkai.github.io/TEAPSE2/)
