@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>TEA-PSE 2.0: SUB-BAND NETWORK FOR REAL-TIME PERSONALIZED SPEECH ENHANCEMENT</title>
+<meta name="generator" content="Jekyll v3.9.0">
+<meta property="og:title" content="TODO: title">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://jvyvkai.github.io/TEA-PSE-2.0/">
+<meta property="og:url" content="https://jvyvkai.github.io/TEA-PSE-2.0/">
+<meta name="twitter:card" content="summary">
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="./teapse2_files/style.css">
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
+    <section class="page-header">
+      
+    </section>
+
+<section class="main-content">
+      <h1 id=""><center>TEA-PSE 2.0: SUB-BAND NETWORK FOR REAL-TIME PERSONALIZED SPEECH ENHANCEMENT
+	  </center></h1>
+
+<center> <a href="https://github.com/jvyvkai">Yukai Ju</a><sup>1,2</sup>, Shimin Zhang<sup>1</sup>, Wei Rao<sup>2</sup>, Yannan Wang<sup>2</sup>, Tao Yu<sup>2</sup>, Lei Xie<sup>1</sup>, Shidong Shang<sup>2</sup></center>
+<center> <sup>1</sup>Audio, Speech and Language Processing Group (ASLP@NPU), Northwestern Polytechnical University, Xi'an, China</center>
+<center> <sup>2</sup>Tencent Ethereal Audio Lab, Tencent Corporation, Shenzhen, China</center>
+
+<h2>0. Contents</h2>
+<ol>
+  <li><a href="https://github.com/jvyvkai/#abstract">Abstract</a></li>
+  <li><a href="https://github.com/jvyvkai/#withinterence">With-Interference</a></li>
+  <li><a href="https://github.com/jvyvkai/#withoutinterence">Without-Interference</a></li>
+</ol>
+
+<br><br>
+<h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
+<p> 
+  Personalized speech enhancement (PSE) utilizes additional cues like speaker embeddings to remove background noise and interfering speech and extract the speech from target speaker. Previous work, the Tencent-Ethereal-Audio-Lab personalized speech enhancement (TEA-PSE) system, ranked 1st in the ICASSP 2022 deep noise suppression (DNS2022) challenge. In this paper, we expand TEA-PSE to its sub-band version – TEA-PSE 2.0, to reduce computational complexity as well as further improve performance. Specifically, we adopt finite impulse response filter banks and spectrum splitting to reduce computational complexity. We introduce a time frequency convolution module (TFCM) to the system for increasing the receptive field with small convolution kernels. Besides, we explore several training strategies to optimize the two-stage network and investigate various loss functions in the PSE task. TEA-PSE 2.0 significantly outperforms TEA-PSE in both speech enhancement performance and computation complexity. Experimental results on the DNS2022 blind test set show that TEA-PSE 2.0 brings 0.102 OVRL personalized DNSMOS improvement with only 21.9% multiply-accumulate operations compared with the previous TEA-PSE.
+  <br>
+	<center><img src="./teapse2_files/1.png" style="height:300px"/></center>
+	<center><img src="./teapse2_files/2.png" style="height:240px"/></center>
+	<center><img src="./teapse2_files/3.png" style="height:240px"/></center>
+<br><br>
+
+
+
+
+<h2>2. DNS blind test set with interference<a name="withinterence"></a></h2>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Models</strong></th>
+      <th style="text-align: center"><strong>Sample 1</strong></th>
+      <th style="text-align: center"><strong>Sample 2</strong></th>
+      <th style="text-align: center"><strong>Sample 3</strong></th>
+      <th style="text-align: center"><strong>Sample 4</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Noisy</td>
+      <td style="text-align: left"><audio src="exp/with/noisy/A1SSXUV24L42LQ_M_Chips_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/noisy/A1SSXUV24L42LQ_M_MouseClick_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/noisy/A2CH4HRFV27II2_M_Dog_Near_Regular_SP_Mobile_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/noisy/A2H95JVPEKRUWA_F_Munching_Near_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TEA-PSE</td>
+      <td style="text-align: left"><audio src="exp/with/tea/A1SSXUV24L42LQ_M_Chips_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/tea/A1SSXUV24L42LQ_M_MouseClick_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/tea/A2CH4HRFV27II2_M_Dog_Near_Regular_SP_Mobile_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/tea/A2H95JVPEKRUWA_F_Munching_Near_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Full TEA-PSE 2.0</td>
+      <td style="text-align: left"><audio src="exp/with/full_tea2/A1SSXUV24L42LQ_M_Chips_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/full_tea2/A1SSXUV24L42LQ_M_MouseClick_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/full_tea2/A2CH4HRFV27II2_M_Dog_Near_Regular_SP_Mobile_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/full_tea2/A2H95JVPEKRUWA_F_Munching_Near_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Sub TEA-PSE 2.0</td>
+      <td style="text-align: left"><audio src="exp/with/sub_tea2/A1SSXUV24L42LQ_M_Chips_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/sub_tea2/A1SSXUV24L42LQ_M_MouseClick_Near_Regular_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/sub_tea2/A2CH4HRFV27II2_M_Dog_Near_Regular_SP_Mobile_Neighbor.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/with/sub_tea2/A2H95JVPEKRUWA_F_Munching_Near_SP_Desk_Neighbor.wav" controls="" preload=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+<br><br>
+
+
+
+<h2>3. DNS blind test set without interference<a name="withoutinterence"></a></h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Models</strong></th>
+      <th style="text-align: center"><strong>Sample 1</strong></th>
+      <th style="text-align: center"><strong>Sample 2</strong></th>
+      <th style="text-align: center"><strong>Sample 3</strong></th>
+      <th style="text-align: center"><strong>Sample 4</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Noisy</td>
+      <td style="text-align: left"><audio src="exp/without/noisy/A1CH3TODZNQCES_M_Breathing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/noisy/A17JWJY7G8TPE1_M_Typing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/noisy/ATX90RI28USEP_M_Dog_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/noisy/AV5FCKI1TTSKR_M_DishWasher_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TEA-PSE</td>
+      <td style="text-align: left"><audio src="exp/without/tea/A1CH3TODZNQCES_M_Breathing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/tea/A17JWJY7G8TPE1_M_Typing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/tea/ATX90RI28USEP_M_Dog_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/tea/AV5FCKI1TTSKR_M_DishWasher_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Full TEA-PSE 2.0</td>
+      <td style="text-align: left"><audio src="exp/without/full_tea2/A1CH3TODZNQCES_M_Breathing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/full_tea2/A17JWJY7G8TPE1_M_Typing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/full_tea2/ATX90RI28USEP_M_Dog_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/full_tea2/AV5FCKI1TTSKR_M_DishWasher_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Sub TEA-PSE 2.0</td>
+      <td style="text-align: left"><audio src="exp/without/sub_tea2/A1CH3TODZNQCES_M_Breathing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/sub_tea2/A17JWJY7G8TPE1_M_Typing_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/sub_tea2/ATX90RI28USEP_M_Dog_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="exp/without/sub_tea2/AV5FCKI1TTSKR_M_DishWasher_Near_Regular_SP_Mobile_Primary.wav" controls="" preload=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+<br><br>
+
+
+
+</table>
+      <footer class="site-footer">
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+</body></html>
